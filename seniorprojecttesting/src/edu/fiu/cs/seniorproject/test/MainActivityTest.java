@@ -54,7 +54,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		assertNotNull(instr);
 		
 		instr.callActivityOnPause(mActivity);
-		//mButton.setText("NewTitle");
 		instr.callActivityOnResume(mActivity);
 		String buttonText = (String) mButton.getText();
 		assertTrue( buttonText.equals("Events") );
