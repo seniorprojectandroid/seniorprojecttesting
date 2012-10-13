@@ -1,8 +1,11 @@
 package edu.fiu.cs.seniorproject.test;
 
+import java.util.concurrent.CountDownLatch;
+
 import edu.fiu.cs.seniorproject.MainActivity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.widget.Button;
 
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
@@ -27,10 +30,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	
 	public void testPreconditions() {
 		assertNotNull(mActivity);
-		assertTrue(mButton != null);
+		assertNotNull(mButton);
 	}
 	
 	public void testButtonUI() {
+		final CountDownLatch latch = new CountDownLatch(1);
 		
 		mActivity.runOnUiThread(
 	            new Runnable() {
@@ -38,9 +42,16 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	                    mButton.setText("Title!!");
 	                    String buttonText = (String) mButton.getText();
 	            		assertTrue( buttonText.equals("Title!!"));
+	            		latch.countDown();
 	                }
 	            }
 	        );
+		
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void testStateDestroy() {
@@ -49,6 +60,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		assertNotNull(mActivity);
 	}
 	
+	@UiThreadTest
 	public void testStatePause() {
 		Instrumentation instr = this.getInstrumentation();
 		assertNotNull(instr);
