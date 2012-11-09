@@ -64,12 +64,7 @@ public class EventDetailsActivityTest extends ActivityInstrumentationTestCase2<E
 		
 		View vw = (View)mEventActivity.findViewById(edu.fiu.cs.seniorproject.R.id.mapview);
 		assertNotNull(vw);
-		//assertTrue(pb.getVisibility() == View.VISIBLE);
-		
-		
-		// pedirle al data manader una lista y sacarle el primer event luego pasarcelo al showevent		
-		// mEventActivity.showEvent(event)
-		
+				
 	}
 	
 	public void testDataProvider() {

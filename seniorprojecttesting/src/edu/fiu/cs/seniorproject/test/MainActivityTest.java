@@ -25,7 +25,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	protected void setUp() {
 		setActivityInitialTouchMode(false);
 		mActivity = getActivity();
-		mButton = (Button)mActivity.findViewById(edu.fiu.cs.seniorproject.R.id.events_button);
+		mButton = (Button)mActivity.findViewById(edu.fiu.cs.seniorproject.R.id.eventsImageButton);
 	}
 	
 	public void testPreconditions() {
