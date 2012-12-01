@@ -64,10 +64,10 @@ public class EventsActivityTest extends
 		assertTrue(eventList.size() > 0);
 	}
 	
-	public void testBitmapDownload() {
-		assertNotNull(mDataManager);
-		mDataManager.downloadBitmap("http://www.miamibeachapi.com/resources/miami-vca.jpg", null);
-	}
+//	public void testBitmapDownload() {
+//		assertNotNull(mDataManager);
+//		mDataManager.downloadBitmap("http://www.miamibeachapi.com/resources/miami-vca.jpg", null);
+//	}
 	
 	public void testStateDestroy() {
 		mActivity.finish();

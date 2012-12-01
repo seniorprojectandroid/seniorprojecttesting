@@ -59,6 +59,8 @@ public class MyPlaceActivityTest extends ActivityInstrumentationTestCase2<MyPlac
 		
 		this.mb.closeDatabase();
 		
+		assertNotNull(List);
+		
 		final CountDownLatch latch = new CountDownLatch(1);
 		
 		mMyPlacesActivity.runOnUiThread(new Runnable() {

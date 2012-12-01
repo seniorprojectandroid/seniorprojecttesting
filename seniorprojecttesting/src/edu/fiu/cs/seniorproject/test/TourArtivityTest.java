@@ -9,8 +9,6 @@ import android.content.res.XmlResourceParser;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import edu.fiu.cs.seniorproject.R;
 import edu.fiu.cs.seniorproject.TourActivity;
 import edu.fiu.cs.seniorproject.utils.XMLParser;
@@ -76,25 +74,6 @@ public class TourArtivityTest extends ActivityInstrumentationTestCase2<TourActiv
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	@UiThreadTest
-	public void testActivityUI() {
-		ListView lv = (ListView)mTourActivity.findViewById(android.R.id.list);
-		assertNotNull(lv);
-		//assertTrue(lv.getVisibility() == View.GONE);
-		
-		TextView tv = (TextView)mTourActivity.findViewById(android.R.id.empty);
-		assertNotNull(tv);
-		//assertTrue(tv.getVisibility() == View.GONE);
-		
-		ProgressBar pb = (ProgressBar)mTourActivity.findViewById(android.R.id.progress);
-		assertNotNull(pb);
-		//assertTrue(pb.getVisibility() == View.VISIBLE);
-				
-	}	
-	
 	
 	public void testStateDestroy() {
 		mTourActivity.finish();

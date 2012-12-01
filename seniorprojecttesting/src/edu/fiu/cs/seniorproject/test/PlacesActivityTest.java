@@ -19,6 +19,7 @@ public class PlacesActivityTest extends
 		ActivityInstrumentationTestCase2<PlacesActivity> {
 
 	private PlacesActivity mActivity = null;
+	private DataManager mDataManager = null;
 	
 	public PlacesActivityTest() {
 		super(PlacesActivity.class);
@@ -28,28 +29,15 @@ public class PlacesActivityTest extends
 	protected void setUp() {
 		setActivityInitialTouchMode(false);
 		mActivity = this.getActivity();
+		mDataManager = DataManager.getSingleton();
 	}
 	
 	public void testPreconditions() {
 		assertNotNull(mActivity);
+		assertNotNull(mDataManager);
 	}
 	
-	// test that the activity will destroy and recreate
-	public void testStateDestroy() {
-		mActivity.finish();
-		mActivity = this.getActivity();
-		assertNotNull(mActivity);
-	}
 	
-	@UiThreadTest
-	public void testStatePause() {
-		Instrumentation instr = this.getInstrumentation();
-		assertNotNull(instr);
-		
-		instr.callActivityOnPause(mActivity);
-		instr.callActivityOnResume(mActivity);
-		assertNotNull(mActivity);
-	}
 	
 	@UiThreadTest
 	public void testUI() {
@@ -59,10 +47,12 @@ public class PlacesActivityTest extends
 	}
 	
 	public void testDataSyncronous() {
+		
+		assertNotNull(mDataManager);
 		android.location.Location currentLocation = AppLocationManager.getCurrentLocation();
 		Location location = new Location( String.valueOf( currentLocation.getLatitude() ), String.valueOf(currentLocation.getLongitude()) );
 		
-		final List<Place> places = DataManager.getSingleton().getPlaceList(location, null, "8", null);
+		final List<Place> places = mDataManager.getPlaceList(location, null, "8", null);
 		assertNotNull(places);
 		assertTrue( places.size() > 0 );
 		
@@ -87,44 +77,61 @@ public class PlacesActivityTest extends
 		}
 	}
 	
-	public void testDataASyncronous() {
-		android.location.Location currentLocation = AppLocationManager.getCurrentLocation();
-		Location location = new Location( String.valueOf( currentLocation.getLatitude() ), String.valueOf(currentLocation.getLongitude()) );
-		
-		ConcurrentPlaceListLoader loader = DataManager.getSingleton().getConcurrentPlaceList(location, null, "1", null);
-		assertNotNull(loader);
-		
-		List<Place> list = new ArrayList<Place>();
-		List<Place> iter = null;
-		
-		while( ( iter = loader.getNext()) != null ) {
-			list.addAll(iter);
+//	public void testDataASyncronous() {
+//		android.location.Location currentLocation = AppLocationManager.getCurrentLocation();
+//		Location location = new Location( String.valueOf( currentLocation.getLatitude() ), String.valueOf(currentLocation.getLongitude()) );
+//		
+//		ConcurrentPlaceListLoader loader = DataManager.getSingleton().getConcurrentPlaceList(location, null, "1", null);
+//		assertNotNull(loader);
+//		
+//		List<Place> list = new ArrayList<Place>();
+//		List<Place> iter = null;
+//		
+//		while( ( iter = loader.getNext()) != null ) {
+//			list.addAll(iter);
+//		}
+//		
+//		final List<Place> places = list;
+//		assertNotNull(places);
+//		assertTrue(places.size() > 0 );
+//		
+//		final CountDownLatch latch = new CountDownLatch(1);
+//		
+//		mActivity.runOnUiThread(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//								
+//			   assertNotNull(mActivity);
+//			   mActivity.showPlaceList(places);
+//			   ListView lv = (ListView)mActivity.findViewById(android.R.id.list);
+//			   assertNotNull(lv);
+//			   assertNotNull(lv.getAdapter());
+//			   latch.countDown();
+//			}
+//		});
+//		
+//	   try {
+//			latch.await();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
+	// test that the activity will destroy and recreate
+		public void testStateDestroy() {
+			mActivity.finish();
+			mActivity = this.getActivity();
+			assertNotNull(mActivity);
 		}
 		
-		final List<Place> places = list;
-		assertNotNull(places);
-		assertTrue(places.size() > 0 );
-		
-		final CountDownLatch latch = new CountDownLatch(1);
-		
-		mActivity.runOnUiThread(new Runnable() {
+		@UiThreadTest
+		public void testStatePause() {
+			Instrumentation instr = this.getInstrumentation();
+			assertNotNull(instr);
 			
-			@Override
-			public void run() {
-								
-			   assertNotNull(mActivity);
-			   mActivity.showPlaceList(places);
-			   ListView lv = (ListView)mActivity.findViewById(android.R.id.list);
-			   assertNotNull(lv);
-			   assertNotNull(lv.getAdapter());
-			   latch.countDown();
-			}
-		});
-		
-	   try {
-			latch.await();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			instr.callActivityOnPause(mActivity);
+			instr.callActivityOnResume(mActivity);
+			assertNotNull(mActivity);
 		}
-	}
 }

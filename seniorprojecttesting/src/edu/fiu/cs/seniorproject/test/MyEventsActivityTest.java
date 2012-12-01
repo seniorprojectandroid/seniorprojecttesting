@@ -52,12 +52,7 @@ public class MyEventsActivityTest extends ActivityInstrumentationTestCase2<MyEve
 		assertNotNull(mEventsActivity);
 	}// end testStatePause
 	
-	@UiThreadTest
-	public void testUI() {
-		//assertNotNull(mMyPlacesActivity.findViewById(android.R.id.));
 		
-	}
-	
 	public void testDataSyncronous() {
 		
 		this.mb.openDatabase();	
@@ -65,6 +60,8 @@ public class MyEventsActivityTest extends ActivityInstrumentationTestCase2<MyEve
 		final ArrayList<String> List = mb.listEventNames();	
 		
 		this.mb.closeDatabase();
+		
+		assertNotNull(List);
 		
 		final CountDownLatch latch = new CountDownLatch(1);
 		

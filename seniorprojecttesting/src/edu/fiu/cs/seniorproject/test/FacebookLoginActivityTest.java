@@ -30,58 +30,58 @@ public class FacebookLoginActivityTest extends ActivityInstrumentationTestCase2<
 		assertNotNull(mActivity);
 	}
 	
-	public void testLogin() {
-		final CountDownLatch latch = new CountDownLatch(1);
-		final AtomicBoolean loginResult = new AtomicBoolean(false);
-		final FacebookManager fManager = new FacebookManager();
-		
-		mActivity.runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {				
-				
-		        fManager.login(mActivity, new String[] {"publish_stream"}, new IRequestResult() {
-					
-					@Override
-					public void onComplete(boolean success) {
-						loginResult.set(success);
-						latch.countDown();
-					}
-		        });
-			}
-		});
-		
-		// wait for the login to complete
-		try {
-			latch.await();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		assertTrue(loginResult.get());
-		
-		// get user info
-		String userInfo = null;
-		try {
-			userInfo = fManager.getFacebookClient().request("me");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		assertNotNull(userInfo);
-		assertTrue(!userInfo.isEmpty());
-		
-		JSONObject info = null;
-		try {
-			info = new JSONObject(userInfo);
-			
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		
-		assertTrue(info != null && info.length() > 0 );
-		assertTrue(info.has("id"));
-	}
+//	public void testLogin() {
+//		final CountDownLatch latch = new CountDownLatch(1);
+//		final AtomicBoolean loginResult = new AtomicBoolean(false);
+//		final FacebookManager fManager = new FacebookManager();
+//		
+//		mActivity.runOnUiThread(new Runnable() {
+//			
+//			@Override
+//			public void run() {				
+//				
+//		        fManager.login(mActivity, new String[] {"publish_stream"}, new IRequestResult() {
+//					
+//					@Override
+//					public void onComplete(boolean success) {
+//						loginResult.set(success);
+//						latch.countDown();
+//					}
+//		        });
+//			}
+//		});
+//		
+//		// wait for the login to complete
+//		try {
+//			latch.await();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		assertTrue(loginResult.get());
+//		
+//		// get user info
+//		String userInfo = null;
+//		try {
+//			userInfo = fManager.getFacebookClient().request("me");
+//		} catch (MalformedURLException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		assertNotNull(userInfo);
+//		assertTrue(!userInfo.isEmpty());
+//		
+//		JSONObject info = null;
+//		try {
+//			info = new JSONObject(userInfo);
+//			
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		assertTrue(info != null && info.length() > 0 );
+//		assertTrue(info.has("id"));
+//	}
 }

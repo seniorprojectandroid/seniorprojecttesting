@@ -55,7 +55,7 @@ public class PlaceDetailsActivityTest extends ActivityInstrumentationTestCase2<P
 		TextView tvdesc = (TextView)mPlaceActivity.findViewById(edu.fiu.cs.seniorproject.R.id.place_description);
 		assertNotNull(tvdesc);		
 		
-		TextView tvevent = (TextView)mPlaceActivity.findViewById(android.R.id.empty);// see with julio
+		TextView tvevent = (TextView)mPlaceActivity.findViewById(android.R.id.empty);
 		assertNotNull(tvevent);
 		
 		View vw = (View)mPlaceActivity.findViewById(edu.fiu.cs.seniorproject.R.id.mapview);

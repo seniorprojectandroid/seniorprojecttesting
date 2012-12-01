@@ -3,6 +3,8 @@ package edu.fiu.cs.seniorproject.test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
+import android.app.Instrumentation;
 import android.content.res.XmlResourceParser;
 import android.support.v4.view.ViewPager;
 import android.test.ActivityInstrumentationTestCase2;
@@ -77,5 +79,21 @@ public void testDataSyncronous() {
 			e.printStackTrace();
 		}
 	}
+
+	public void testStateDestroy() {
+		mTourActivityDetails.finish();
+		mTourActivityDetails = this.getActivity();
+		assertNotNull(mTourActivityDetails);
+	}
+	
+	@UiThreadTest
+	public void testStatePause() {
+		Instrumentation instr = this.getInstrumentation();
+		assertNotNull(instr);
+		
+		instr.callActivityOnPause(mTourActivityDetails);
+		instr.callActivityOnResume(mTourActivityDetails);
+	}
+
 
 }
